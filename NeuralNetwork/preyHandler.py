@@ -1,5 +1,6 @@
 import random
 import pygame
+import math
 
 class Prey():
 
@@ -7,7 +8,8 @@ class Prey():
 
     def __init__(self):
         
-        pass
+        self.speed = 0
+        self.angle = 0
 
     def create(self, screen, sprite):
 
@@ -35,28 +37,45 @@ class Prey():
 
     def energy(self, screen, size):
 
-        for i in range(len(Prey().preys) - 1):
+        toRemove = []
 
-            prey = Prey().preys[i]
+        for prey in Prey.preys:
+
             prey[3] -= 1
 
             if prey[3] <= 0:
 
-                Prey().destroy(screen, size, [prey[0], prey[1], prey[2], prey[3]])
+                toRemove.append(prey)
+
+        for prey in toRemove:
+
+            self.destroy(screen, size, prey)
     
 
-    def destroy(self, screen, size, position):
+    def destroy(self, screen, size, prey):
 
-        index = Prey().preys.index(position)
+        if prey in Prey.preys:
 
-        del Prey().preys[index]
-
-        pygame.draw.rect(screen, "lavender", (position[0], position[1], size, size))
-
-        print("Deleted prey at:", position)
+            Prey.preys.remove(prey)
+            pygame.draw.rect(screen, "lavender", (prey[0], prey[1], size, size))
+            print("Deleted hunter at:", prey)
 
 
     def draw(self, screen, sprite):
         for prey in Prey.preys:
             screen.blit(sprite, (prey[0], prey[1]))
             prey[2] = "drawn"
+
+
+    def move(self, prey, angle, velocity):
+
+        speed = prey[4]
+        angle = prey[5]
+        prey[0] += (math.sqrt((velocity**2) - ((velocity * math.sin(angle))**2))) #change prey's x position
+        prey[1] += (velocity * math.sin(angle)) #change prey's y position
+
+
+    def rotate(self, prey, direction): #direction = 1 or -1 (turn left or right)
+
+        prey[5] += direction * 4 #change prey's angle
+        return prey
