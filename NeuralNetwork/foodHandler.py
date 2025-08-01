@@ -1,5 +1,6 @@
 import random
 import pygame
+import math
 
 class Food():
 
@@ -8,6 +9,7 @@ class Food():
     def __init__(self):
         
         pass
+    
 
     def create(self, screen, sprite):
 
