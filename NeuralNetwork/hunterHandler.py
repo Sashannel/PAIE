@@ -24,7 +24,7 @@ class Hunter():
 
             hunter = Hunter().hunters[i]
 
-            if hunter[2] != "drawn":
+            if True:
 
                 screen.blit(sprite, (hunter[0], hunter[1]))
 
@@ -54,3 +54,9 @@ class Hunter():
         pygame.draw.rect(screen, "lavender", (position[0], position[1], size, size))
 
         print("Deleted hunter at:", position)
+
+
+    def draw(self, screen, sprite):
+        for hunter in Hunter.hunters:
+            screen.blit(sprite, (hunter[0], hunter[1]))
+            hunter[2] = "drawn"
