@@ -1,58 +1,55 @@
-import numpy
+import numpy as numpy
 import math
 
-class Layer():
+class NN:
 
     def __init__(self):
 
-        self.nodes = []
+        self.layers = []
+        self.networkShape = [2, 15, 17, 15, 2]
+
+        for i in range(1, len(self.networkShape)):
+
+            self.layers.append(Layer(self.networkShape[i - 1], self.networkShape[i]))
 
 
-    def compute(self, inputs, weights, bias):
+    def brain(self, inputs):
 
-        output = 0
+        for i, layer in enumerate(self.layers):
 
-        if (len(inputs) == len(weights)):
+            if i == 0:
 
-            for i in range(len(inputs)):
+                layer.forward(inputs)
 
-                output += inputs[i] * weights[i]
+            else:
 
-            output += bias
+                layer.forward(self.layers[i - 1].nodes)
 
-            return output
-        
-        else:
+            if i != len(self.layers) - 1:
 
-            return "Error, inputs length isn't the same as weights length"
+                layer.activation()
 
 
-    def activation(self, x):
-
-        output = 1.3 * math.tanh(x)
-        return output
+        return self.layers[-1].nodes
 
 
-    def create(self, size, previous_size, previous_outputs, previous_weights, biases):
-
-        self.size = size
-        self.node = []
-
-        for i in range(self.size):
-
-            self.nodes.append([])
-
-        for i in range(self.size):
-
-            self.nodes[i] = [previous_outputs, previous_weights, biases[i], Layer().compute(previous_outputs, previous_weights, biases[i])]
-        
-        print(self.nodes)
+class Layer:
 
 
+    def __init__(self, numberOfInputs, numberOfNodes):
 
-#Layer(5).create() exemple de création de layer
-ps = 2
-po = [1, 2, 3]
-pw = [2, 3, 4]
-b = [1, 3, 5]
-Layer().create(3, ps, po, pw, b)
+        self.numberOfInputs = numberOfInputs
+        self.numberOfNodes = numberOfNodes
+        self.weights = numpy.random.randn(numberOfNodes, numberOfInputs)
+        self.biases = numpy.random.randn(numberOfNodes)
+        self.nodes = numpy.zeros(numberOfNodes)
+
+
+    def forward(self, inputs):
+
+        self.nodes = numpy.dot(self.weights, inputs) + self.biases
+
+
+    def activation(self):
+
+        self.nodes = numpy.tanh(self.nodes)
