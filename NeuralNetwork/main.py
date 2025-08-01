@@ -56,6 +56,8 @@ def main():
 
             hunterHandler.Hunter().create(screen, images[2])
 
+            
+
 
         preyHandler.Prey().energy(screen, 50)
         hunterHandler.Hunter().energy(screen, 50)
@@ -67,8 +69,14 @@ def main():
 
             #    foodHandler.Food().destroy(screen, 50, foodHandler.Food().foods[number])
 
-
+        
         clock.tick(fps)
+        pygame.draw.rect(screen, "lavender", (0, 0, width, height))
+
+        foodHandler.Food().draw(screen, images[0])
+        preyHandler.Prey().draw(screen, images[1])
+        hunterHandler.Hunter().draw(screen, images[2])
+        
         pygame.display.flip()
 
 
