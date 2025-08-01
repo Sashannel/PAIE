@@ -61,14 +61,6 @@ def main():
 
         preyHandler.Prey().energy(screen, 50)
         hunterHandler.Hunter().energy(screen, 50)
-
-        #if attempt == 68:
-
-            #if len(foodHandler.Food().foods) > 1:
-            #    number = random.randint(0, len(foodHandler.Food().foods) - 1)
-
-            #    foodHandler.Food().destroy(screen, 50, foodHandler.Food().foods[number])
-
         
         clock.tick(fps)
         pygame.draw.rect(screen, "lavender", (0, 0, width, height))
