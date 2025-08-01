@@ -24,7 +24,7 @@ class Food():
 
             food = Food().foods[i]
 
-            if food[2] != "drawn":
+            if True:
 
                 screen.blit(sprite, (food[0], food[1]))
 
@@ -43,3 +43,9 @@ class Food():
         pygame.draw.rect(screen, "lavender", (position[0], position[1], sprite, sprite))
 
         print("Deleted food at:", position)
+
+    
+    def draw(self, screen, sprite):
+        for food in Food.foods:
+            screen.blit(sprite, (food[0], food[1]))
+            food[2] = "drawn"
