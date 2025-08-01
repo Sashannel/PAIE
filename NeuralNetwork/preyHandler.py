@@ -54,3 +54,9 @@ class Prey():
         pygame.draw.rect(screen, "lavender", (position[0], position[1], size, size))
 
         print("Deleted prey at:", position)
+
+
+    def draw(self, screen, sprite):
+        for prey in Prey.preys:
+            screen.blit(sprite, (prey[0], prey[1]))
+            prey[2] = "drawn"
